@@ -1,0 +1,13 @@
+language: ruby
+cache:
+- bundler
+before_script:
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+deploy:
+  provider: heroku
+  api_key:
+    secure: "HzTNS+UL0KWvOpcg8MlIXB+AnKnnk2VlAKiIUmyuNy+IByAfHO2PUvLrTwG+sQbftz3MvWvURwklT5GjntCyql9r/bbOtiGpEKAP2sjfeG0+ChcXLIrUvKuuKwRrcNr7CKuaWxZIvjsZD5r7vBXcf6Rd4xPIvidHQ063lp8pFZBYE2zz5ePUMaSDa4481O/UoRgljkzZAkXNFxL3CNNWIH2e6Wgad5jp5n4J0jjEcMsRvHkAspLNs/KDbd39vVTwU3qil93Rj3VsCWJijWBp8655gvSMfwBDZSGTv37FfixZ8M/GF8czLl+EqSs/b1fBu3mnI6kNYT8/msiW1bDOlfEWFzxMmOyV9uZJyzhOwS2CGcbdb/CFZmi+3QgO/HOIVEva1WeDs4AT9sQNbjMPe009AXgEwCwlrQbCi51eJeVvJbFHqPIds6S/T9rElPpmRmMSsA4dH0eEeG3HqGi9jrtCh2m4yFS9DOUouCYc+652jOXJxC7yBzXq1B9Pc1uvRmaO7s6dRv+nis+iPTckLufHLbnXXdLY1Hvok4zTXqgyh4+IYLLAwCJuv0ZcmhGYSab3XoUKCsKwTKF2DN1wfYFVRggGyKgMXMQWuBqRxkKysfexdkqr0cEknDVP9Fag8fqVx3PiITICiR+cnfM/NClRE2Tg499OwwqwrYivsgs="
+  app: quantified-emmie
+  on:
+    repo: emmiehayes/quantified_self
