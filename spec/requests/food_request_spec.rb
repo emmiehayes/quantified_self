@@ -105,4 +105,33 @@ describe "Foods API" do
       expect(result[:message]).to eq("Validation failed: Name can't be blank")
     end  
   end
+
+  context "DELETE /api/v1/foods" do 
+    it "successfully deletes an existing food" do 
+      create_list(:food, 3)
+      food = Food.first
+      expect(Food.all.count).to eq(3)
+
+      delete "/api/v1/foods/#{food.id}"
+
+      expect(response).to have_http_status(200)
+    
+      expect(Food.all.count).to eq(2)
+      
+      expect(Food.all.first.id).to eq(2)
+      expect(Food.all.last.id).to eq(3)
+    end
+
+    it "returns 404 with message when id to delete does not exist" do
+      non_existing_food_id = 1000
+
+      delete "/api/v1/foods/#{non_existing_food_id}.json"
+      expect(response).to have_http_status(404)
+
+      result = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(result).to have_key(:message)
+      expect(result[:message]).to eq("Couldn't find Food with 'id'=1000")
+    end
+  end
 end
