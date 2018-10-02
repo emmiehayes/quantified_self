@@ -15,13 +15,21 @@ class Api::V1::FoodsController < ApplicationController
   end
 
   swagger_api :create do
-    summary "Creates a new food"
-    param :form, :name, :string, :required
-    param :form, :calories, :integer, :required
+    summary "Creates a new ood"
+    param :form, :name, :string, :required, "Food Name"
+    param :form, :calories, :integer, :required, "Total Calories"
     response :ok
     response :unprocessable_entity
   end
 
+  swagger_api :update do
+    summary "Updates an existing food"
+    param :path, :id, :integer, :required, "Food Id"
+    param :form, :name, :string, :optional, "Food Name"
+    param :form, :calories, :integer, :optional, "Total Calories"
+    response :ok
+    response :unprocessable_entity
+  end
 
   def index
     render json: Food.all
@@ -33,6 +41,11 @@ class Api::V1::FoodsController < ApplicationController
 
   def create 
     render json: Food.create!(food_params)
+  end
+
+  def update
+    @food = Food.find(params[:id])
+    render json: @food if @food.update!(food_params)
   end
 
   private 
