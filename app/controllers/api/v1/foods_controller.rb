@@ -1,4 +1,5 @@
 class Api::V1::FoodsController < ApplicationController
+  before_action :set_food, only:[:show,:update, :destroy]
   
   swagger_controller :foods, 'Foods'
   
@@ -15,7 +16,7 @@ class Api::V1::FoodsController < ApplicationController
   end
 
   swagger_api :create do
-    summary "Creates a new ood"
+    summary "Creates a new food"
     param :form, :name, :string, :required, "Food Name"
     param :form, :calories, :integer, :required, "Total Calories"
     response :ok
@@ -31,12 +32,19 @@ class Api::V1::FoodsController < ApplicationController
     response :unprocessable_entity
   end
 
+    swagger_api :destroy do
+    summary "Deletes an existing food"
+    param :path, :id, :integer, :optional, "Food Id"
+    response :ok
+    response :not_found
+  end
+
   def index
     render json: Food.all
   end
 
   def show
-    render json: Food.find(params[:id])
+    render json: @food
   end
 
   def create 
@@ -44,11 +52,18 @@ class Api::V1::FoodsController < ApplicationController
   end
 
   def update
-    @food = Food.find(params[:id])
     render json: @food if @food.update!(food_params)
   end
 
+  def destroy
+    render json: Food.all if @food.destroy!
+  end
+
   private 
+
+  def set_food
+    @food = Food.find(params[:id])
+  end
 
   def food_params
     params.permit(:name, :calories)
