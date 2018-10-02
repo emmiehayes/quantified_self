@@ -1,5 +1,5 @@
 class Api::V1::FoodsController < ApplicationController
-  before_action :set_food, only:[:show,:update, :destroy]
+  before_action :set_food, only:[:show, :update, :destroy]
   
   swagger_controller :foods, 'Foods'
   

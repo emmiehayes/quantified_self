@@ -3,15 +3,15 @@ require "rails_helper"
 describe "Foods API" do
   context "GET /api/v1/foods" do
     it "returns a list of foods" do
-      create_list(:food, 3)
+      create_list(:food, 10)
 
-      get "/api/v1/foods.json"
+      get "/api/v1/foods"
       expect(response).to be_successful
 
       foods = JSON.parse(response.body, symbolize_names: true)
       food = foods.first
 
-      expect(foods.count).to eq(3)
+      expect(Food.all.count).to eq(10)
       expect(food).to have_key(:id)
       expect(food).to have_key(:name)
       expect(food).to have_key(:calories)
@@ -48,6 +48,7 @@ describe "Foods API" do
 
   context "POST /api/v1/foods" do 
     it "successfully creates a new food" do 
+     
       expect(Food.all.count).to eq(0)
       post "/api/v1/foods", :params => { :name => "cookie", :calories => 178 }
 
