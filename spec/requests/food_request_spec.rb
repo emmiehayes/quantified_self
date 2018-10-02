@@ -33,7 +33,7 @@ describe "Foods API" do
       expect(food_1).to have_key(:calories)
     end
 
-    it "returns 404 and 'Couldn't find Food' message when id requested does not exist" do
+    it "returns 404 with message when id requested does not exist" do
       non_existing_food_id = 1000
 
       get "/api/v1/foods/#{non_existing_food_id}.json"
@@ -62,7 +62,7 @@ describe "Foods API" do
       expect(new_food).to have_key(:calories)
     end
 
-    it "returns 422 and 'Food not created' message when missing params" do
+    it "returns 422 with message when missing params" do
       
       post "/api/v1/foods", :params => { :name => "cookie" }
       expect(response).to have_http_status(422)
@@ -71,6 +71,38 @@ describe "Foods API" do
    
       expect(result).to have_key(:message)
       expect(result[:message]).to eq("Validation failed: Calories can't be blank")
+    end  
+  end
+
+  context "PATCH /api/v1/foods" do 
+    it "successfully updates an existing food" do 
+      create_list(:food, 3)
+      food = Food.first
+      expect(food.name).to eq("MyString")
+
+      patch "/api/v1/foods/#{food.id}", :params => { :name => "cookie" }
+
+      expect(response).to have_http_status(200)
+      
+      updated_food = JSON.parse(response.body, symbolize_names: true)
+
+      expect(updated_food).to have_key(:id)
+      expect(updated_food).to have_key(:name)
+      expect(updated_food[:name]).to eq("cookie")
+      expect(updated_food).to have_key(:calories)
+    end
+
+    it "returns 422 with message when empty params given" do
+      create_list(:food, 3)
+      food = Food.first
+
+      patch "/api/v1/foods/#{food.id}", :params => { :name => "" }
+      expect(response).to have_http_status(422)
+
+      result = JSON.parse(response.body, symbolize_names: true)
+   
+      expect(result).to have_key(:message)
+      expect(result[:message]).to eq("Validation failed: Name can't be blank")
     end  
   end
 end
