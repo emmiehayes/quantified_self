@@ -45,4 +45,32 @@ describe "Foods API" do
       expect(result[:message]).to eq("Couldn't find Food with 'id'=1000")
     end
   end
+
+  context "POST /api/v1/foods" do 
+    it "successfully creates a new food" do 
+      expect(Food.all.count).to eq(0)
+      post "/api/v1/foods", :params => { :name => "cookie", :calories => 178 }
+
+      expect(Food.all.count).to eq(1)
+      expect(response).to have_http_status(200)
+      
+      new_food = JSON.parse(response.body, symbolize_names: true)
+
+      expect(new_food).to have_key(:id)
+      expect(new_food[:id]).to eq(1)
+      expect(new_food).to have_key(:name)
+      expect(new_food).to have_key(:calories)
+    end
+
+    it "returns 422 and 'Food not created' message when missing params" do
+      
+      post "/api/v1/foods", :params => { :name => "cookie" }
+      expect(response).to have_http_status(422)
+
+      result = JSON.parse(response.body, symbolize_names: true)
+   
+      expect(result).to have_key(:message)
+      expect(result[:message]).to eq("Validation failed: Calories can't be blank")
+    end  
+  end
 end
