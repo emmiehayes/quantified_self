@@ -19,28 +19,28 @@ describe "Meals API" do
     end
   end
 
-  context "GET /api/v1/meals/:id" do
+  context "GET /api/v1/meals/:meal_id/foods" do
     it "successfully returns single meal with foods" do
       2.times do 
         create(:meal, :with_foods)
       end
-    
+  
       meal = Meal.first
 
-      get "/api/v1/meals/#{meal.id}.json"
+      get "/api/v1/meals/#{meal.id}/foods.json"
       expect(response).to be_successful
-
       meal_1 = JSON.parse(response.body, symbolize_names: true)
 
       expect(meal_1[:id]).to eq(meal.id)
       expect(meal_1).to have_key(:name)
       expect(meal_1).to have_key(:foods)
+      expect(meal_1[:foods].count).to eq(2)
     end
 
     it "returns 404 with message when id requested does not exist" do
       non_existing_meal_id = 1000
 
-      get "/api/v1/meals/#{non_existing_meal_id}.json"
+      get "/api/v1/meals/#{non_existing_meal_id}/foods.json"
       expect(response).to have_http_status(404)
 
       result = JSON.parse(response.body, symbolize_names: true)
