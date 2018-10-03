@@ -4,7 +4,7 @@ describe "Foods API" do
   context "GET /api/v1/foods" do
     it "returns a list of foods" do
       create_list(:food, 10)
-
+      
       get "/api/v1/foods"
       expect(response).to be_successful
 
