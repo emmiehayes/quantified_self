@@ -2,7 +2,11 @@ class MealFoodSerializer < ActiveModel::Serializer
   attributes :message
 
   def message 
-    "Successfully added #{food_name} to #{meal_name}"
+    if scope[:action] == "create"
+      "Successfully added #{food_name} to #{meal_name}"
+    elsif scope[:action] == "remove"
+      "Successfully removed #{food_name} from #{meal_name}"
+    end
   end
 
   def food_name
