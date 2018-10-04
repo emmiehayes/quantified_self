@@ -1,10 +1,8 @@
 class Api::V1::MealFoodsController < ApplicationController
 
   def create
-    @meal_food = MealFood.create(meal_food_params)
-    if @meal_food.save!
-     render json: @meal_food, serializer: MealFoodSerializer
-    end
+    meal_food = MealFood.create!(meal_food_params)
+    render json: meal_food
   end
 
   private
