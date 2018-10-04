@@ -49,4 +49,35 @@ describe "Meals API" do
       expect(result[:message]).to eq("Couldn't find Meal with 'id'=1000")
     end
   end
+
+  context "POST /api/v1/meals/:meal_id/foods/:id" do 
+    it "successfully adds a food to a meal" do 
+      food = create(:food)
+      meal = create(:meal)
+      expect(meal.foods.count).to eq(0)
+
+      post "/api/v1/meals/#{meal.id}/foods/#{food.id}"
+
+      expect(meal.foods.count).to eq(1)
+      expect(response).to have_http_status(200)
+      
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(result).to have_key(:message)
+      expect(result[:message]).to eq("Successfully added #{food.name} to #{meal.name}")
+    end
+
+    it "returns 422 with message when missing params" do
+      invalid_food_id = 1000
+      meal = create(:meal)
+
+      post "/api/v1/meals/#{meal.id}/foods/#{invalid_food_id}"
+      expect(response).to have_http_status(422)
+
+      result = JSON.parse(response.body, symbolize_names: true)
+   
+      expect(result).to have_key(:message)
+      expect(result[:message]).to eq("Validation failed: Food must exist")
+    end  
+  end
 end
