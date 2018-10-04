@@ -1,7 +1,7 @@
 {
   "apiVersion": "1.0",
-  "swaggerVersion": "2.0",
-  "basePath": "http://localhost:3000",
+  "swaggerVersion": "1.2",
+  "basePath": "https://quantified-emmie.herokuapp.com",
   "resourcePath": "foods",
   "apis": [
     {
