@@ -75,7 +75,7 @@ describe "Foods API" do
     end  
   end
 
-  context "PATCH /api/v1/foods" do 
+  context "PATCH /api/v1/foods/:id" do 
     it "successfully updates an existing food" do 
       create_list(:food, 3)
       food = Food.first
@@ -107,7 +107,7 @@ describe "Foods API" do
     end  
   end
 
-  context "DELETE /api/v1/foods" do 
+  context "DELETE /api/v1/foods/:id" do 
     it "successfully deletes an existing food" do 
       create_list(:food, 3)
       food = Food.first
