@@ -67,7 +67,7 @@ describe "Meals API" do
       expect(result[:message]).to eq("Successfully added #{food.name} to #{meal.name}")
     end
 
-    it "returns 422 with message when missing params" do
+    it "returns 422 when an invalid food id is added to a meal" do
       invalid_food_id = 1000
       meal = create(:meal)
 
@@ -79,5 +79,35 @@ describe "Meals API" do
       expect(result).to have_key(:message)
       expect(result[:message]).to eq("Validation failed: Food must exist")
     end  
+  end
+
+  context "DELETE /api/v1/meals/:meal_id/foods/:id" do 
+    it "successfully deletes an existing food from a meal" do 
+      meal = create(:meal, :with_foods)
+      food = meal.foods.first
+      
+      expect(meal.foods.count).to eq(2)
+      delete "/api/v1/meals/#{meal.id}/foods/#{food.id}"
+
+      expect(meal.foods.count).to eq(1)
+      expect(response).to have_http_status(200)
+      
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(result).to have_key(:message)
+      expect(result[:message]).to eq("Successfully removed #{food.name} from #{meal.name}")
+    end
+
+    it "returns 404 with message when food to delete from meal does not exist" do
+      non_existing_food_id = 1000
+
+      delete "/api/v1/foods/#{non_existing_food_id}.json"
+      expect(response).to have_http_status(404)
+
+      result = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(result).to have_key(:message)
+      expect(result[:message]).to eq("Couldn't find Food with 'id'=1000")
+    end
   end
 end
