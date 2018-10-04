@@ -15,7 +15,7 @@ describe "Meals API" do
       expect(meal).to have_key(:id)
       expect(meal).to have_key(:name)
       expect(meal).to have_key(:foods)
-      expect(meal[:foods]).to eq([{:id=>1, :name=>"MyString", :calories=>1}, {:id=>2, :name=>"MyString", :calories=>1}])
+      expect(meal[:foods].count).to eq(2)
     end
   end
 
