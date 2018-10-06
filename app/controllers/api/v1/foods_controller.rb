@@ -1,7 +1,6 @@
 class Api::V1::FoodsController < ApplicationController
   before_action :set_food, only:[:show, :update, :destroy]
 
-
   def index
     render json: Food.all
   end
@@ -19,7 +18,8 @@ class Api::V1::FoodsController < ApplicationController
   end
 
   def destroy
-    render json: Food.all if @food.destroy!
+    @food.destroy
+    head :no_content
   end
 
   private 
