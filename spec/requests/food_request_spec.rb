@@ -115,7 +115,7 @@ describe "Foods API" do
 
       delete "/api/v1/foods/#{food.id}"
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(204)
     
       expect(Food.all.count).to eq(2)
       
