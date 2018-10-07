@@ -1,4 +1,5 @@
 # Quantified Self
+[![Build Status](https://travis-ci.org/emmiehayes/quantified_self.svg?branch=master)](https://travis-ci.org/emmiehayes/quantified_self)
 
 ### System Dependencies:
 - Ruby version 2.4.1
