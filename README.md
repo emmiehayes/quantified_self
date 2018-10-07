@@ -6,7 +6,7 @@
 
 ### Deployed with Heroku:
 
-https://quantified-emmie.herokuapp.com/
+https://calorie-me.herokuapp.com/
 
 ### To run locally:
 
