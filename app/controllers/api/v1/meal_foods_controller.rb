@@ -6,7 +6,7 @@ class Api::V1::MealFoodsController < ApplicationController
   end
 
   def destroy
-    meal_food = MealFood.squash_connection(meal_food_params[:meal_id], meal_food_params[:food_id])
+    meal_food = MealFood.find_relation(meal_food_params[:meal_id], meal_food_params[:food_id])
     render json: meal_food, scope: { action: "remove" } if meal_food.destroy
   end
 
