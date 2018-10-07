@@ -209,3 +209,53 @@ https://quantified-emmie.herokuapp.com/
     "message": "Successfully removed Banana from Breakfast"
 }
 ```
+
+## Favorites Endpoints:
+
+#### GET /api/v1/favorite_foods
+
+- Retrieve a list of foods (based on consumption), organized by `timesEaten` in descending order (up to three)
+- Only foods consumed more than once will be considered
+- If successful, this request will return a response in the following format:
+
+```
+[
+    {
+        "timesEaten": 3,
+        "foods": [
+            {
+                "id": 3,
+                "name": "Honey",
+                "calories": 10,
+                "mealsWhenEaten": [
+                    "Breakfast",
+                    "Snack"
+                ]
+            },
+            {
+                "id": 2,
+                "name": "Waffle",
+                "calories": 10,
+                "mealsWhenEaten": [
+                    "Breakfast",
+                    "Lunch"
+                ]
+            }
+        ]
+    },
+    {
+        "timesEaten": 2,
+        "foods": [
+            {
+                "id": 1,
+                "name": "Banana",
+                "calories": 10,
+                "mealsWhenEaten": [
+                    "Breakfast",
+                    "Lunch"
+                ]
+            },
+        ]
+    }
+]
+```
