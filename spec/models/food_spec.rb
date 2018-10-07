@@ -29,10 +29,19 @@ RSpec.describe Food, type: :model do
       MealFood.create(meal_id: Meal.first.id, food_id: Food.first.id)
       MealFood.create(meal_id: Meal.second.id, food_id: Food.first.id)
       MealFood.create(meal_id: Meal.third.id, food_id: Food.first.id)
+      MealFood.create(meal_id: Meal.second.id, food_id: Food.first.id)
+      MealFood.create(meal_id: Meal.third.id, food_id: Food.first.id)
       MealFood.create(meal_id: Meal.first.id, food_id: Food.second.id)
       MealFood.create(meal_id: Meal.second.id, food_id: Food.second.id)
+      MealFood.create(meal_id: Meal.first.id, food_id: Food.second.id)
+      MealFood.create(meal_id: Meal.second.id, food_id: Food.second.id)
+      MealFood.create(meal_id: Meal.second.id, food_id: Food.third.id)
+      MealFood.create(meal_id: Meal.first.id, food_id: Food.third.id)
+      MealFood.create(meal_id: Meal.second.id, food_id: Food.third.id)
+      MealFood.create(meal_id: Meal.first.id, food_id: Food.last.id)
+      MealFood.create(meal_id: Meal.second.id, food_id: Food.last.id)
 
-      expect(Food.times_eaten).to eq([3, 2])
+      expect(Food.times_eaten).to eq([5, 4, 3])
     end
   end
 end

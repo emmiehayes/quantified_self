@@ -7,6 +7,7 @@ class Food < ApplicationRecord
     order('meals_count DESC')
     .distinct
     .where('meals_count > 1')
+    .limit(3)
     .pluck(:meals_count)
   end
 
