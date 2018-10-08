@@ -28,7 +28,6 @@ https://calorie-me.herokuapp.com/
 `rspec`
 
 
-
 # DOCUMENTATION
 
 ## Food Endpoints:
